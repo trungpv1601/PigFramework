@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
+use League\Plates\Engine;
 
 /**
  * Handles all requests to /.
@@ -13,16 +13,16 @@ use Twig_Environment;
 class IndexController
 {
     /** @var Twig_Environment */
-    private $twig;
+    private $view;
 
     /**
      * IndexController, constructed by the container
      *
      * @param Twig_Environment $twig
      */
-    public function __construct(Twig_Environment $twig)
+    public function __construct(Engine $view)
     {
-        $this->twig = $twig;
+        $this->view = $view;
     }
 
     /**
@@ -32,7 +32,27 @@ class IndexController
      */
     public function index()
     {
-        return new Response($this->twig->render('pages/index.html.twig'));
+        return new Response($this->view->render('index', ['name' => 'Jonathan']));
+    }
+
+    /**
+     * Login page
+     *
+     * @return Response
+     */
+    public function login()
+    {
+        return new Response($this->view->render('login'));
+    }
+
+    /**
+     * Register page
+     *
+     * @return Response
+     */
+    public function register()
+    {
+        return new Response($this->view->render('register'));
     }
 
     /**

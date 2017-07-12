@@ -3,7 +3,8 @@ namespace App\Controllers;
 
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
+use Symfony\Component\HttpFoundation\Request;
+use League\Plates\Engine;
 
 /**
  * Handles all requests error /.
@@ -11,17 +12,19 @@ use Twig_Environment;
  */
 class ErrorController
 {
-    /** @var Twig_Environment */
     private $view;
+
+    private $request;
 
     /**
      * ErrorController, constructed by the container
      *
-     * @param Twig_Environment $view
+     * @param Engine $view
      */
-    public function __construct(Twig_Environment $view)
+    public function __construct(Engine $view)
     {
         $this->view = $view;
+        $this->request  = Request::createFromGlobals();
     }
 
     /**
@@ -31,16 +34,44 @@ class ErrorController
      */
     public function page404()
     {
-        return new Response($this->view->render('errors/404.html.twig'));
+        $response = new Response($this->view->render('/errors/404'), Response::HTTP_NOT_FOUND);
+        if ($response instanceof Response) {
+            // Send the generated response back to the user
+            $response
+                    ->prepare($this->request)
+                    ->send();
+        }
     }
 
     /**
-     * Throw an exception (for testing the error handler)
+     * 405 page
      *
-     * @throws Exception
+     * @return Response
      */
     public function page405()
     {
-        return new Response($this->view->render('errors/405.html.twig'));
+        $response = new Response($this->view->render('/errors/405'), Response::HTTP_METHOD_NOT_ALLOWED);
+        if ($response instanceof Response) {
+            // Send the generated response back to the user
+            $response
+                    ->prepare($this->request)
+                    ->send();
+        }
+    }
+
+    /**
+     * 500 page
+     *
+     * @return Response
+     */
+    public function page500($message)
+    {
+        $response = new Response($this->view->render('/errors/500', ['message' => $message]));
+        if ($response instanceof Response) {
+            // Send the generated response back to the user
+            $response
+                    ->prepare($this->request)
+                    ->send();
+        }
     }
 }
