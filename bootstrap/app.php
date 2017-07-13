@@ -19,8 +19,10 @@ $request = Request::createFromGlobals();
 
 /*
  * Container setup
+ * http://container.thephpleague.com/
  */
 $container = new Container();
+// Native PHP template http://platesphp.com/
 $container
     ->add('League\Plates\Engine', new \League\Plates\Engine(__DIR__ . "/../views"));    
 $container
@@ -30,17 +32,16 @@ $container
         new ReflectionContainer()
     );
 // Get Container App\Controllers\ErrorController
-$errorController = $container->get('App\Controllers\ErrorController');
-
+$errorController = $container->get('App\Controllers\ErrorController'); 
 
 /*
  * Dotenv initialization
+ * https://github.com/vlucas/phpdotenv
  */
 if (file_exists(__DIR__ . '/../.env') !== true) {
-    // Response::create('Missing .env file (please copy .env.example).', Response::HTTP_INTERNAL_SERVER_ERROR)
-    //     ->prepare($request)
-    //     ->send();
-    $errorController->page500('Missing .env file (please copy .env.example).');
+    Response::create('Missing .env file (please copy .env.example).', Response::HTTP_INTERNAL_SERVER_ERROR)
+        ->prepare($request)
+        ->send();
     return;
 }
 $dotenv = new Dotenv\Dotenv(__DIR__ . '/../');
@@ -49,6 +50,7 @@ $dotenv->load();
 
 /*
  * Error handler
+ * https://github.com/filp/whoops
  */
 $whoops = new Run;
 if (getenv('APP_DEBUG') === 'true') {
@@ -69,8 +71,25 @@ if (getenv('APP_DEBUG') === 'true') {
 }
 $whoops->register();
 
+
+/*
+ * Database
+ * https://medoo.in/api/new
+ */
+$container
+    ->add('Medoo\Medoo')
+    ->withArgument([
+        'database_type' => getenv('DB_CONNECTION') ? getenv('DB_CONNECTION') : 'mysql',
+        'server' => getenv('DB_HOST') ? getenv('DB_HOST') : 'localhost',
+        'port' => getenv('DB_PORT') ? getenv('DB_PORT') : 3306,
+        'database_name' => getenv('DB_DATABASE') ? getenv('DB_DATABASE') : 'name',
+        'username' => getenv('DB_USERNAME') ? getenv('DB_USERNAME') : 'your_username',
+        'password' => getenv('DB_PASSWORD') ? getenv('DB_PASSWORD') : ''
+    ]);   
+
 /*
  * Routes
+ * https://github.com/nikic/FastRoute
  */
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
     $routes = require __DIR__ . '/../routes.php';

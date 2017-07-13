@@ -4,6 +4,7 @@ namespace App\Controllers;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use League\Plates\Engine;
+use Medoo\Medoo;
 
 /**
  * Handles all requests to /.
@@ -12,17 +13,18 @@ use League\Plates\Engine;
  */
 class IndexController
 {
-    /** @var Twig_Environment */
     private $view;
+    private $database;
 
     /**
      * IndexController, constructed by the container
      *
-     * @param Twig_Environment $twig
+     * @param Engine $view
      */
-    public function __construct(Engine $view)
+    public function __construct(Engine $view, Medoo $database)
     {
         $this->view = $view;
+        $this->database = $database;
     }
 
     /**
@@ -32,7 +34,7 @@ class IndexController
      */
     public function index()
     {
-        return new Response($this->view->render('index', ['name' => 'Jonathan']));
+        return new Response($this->view->render('index'));
     }
 
     /**

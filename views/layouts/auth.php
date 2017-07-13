@@ -9,13 +9,13 @@
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="<?=url('/plugins/bootstrap/css/bootstrap.min.css')?>">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?=getenv('APP_URL')?>/plugins/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="<?=url('/plugins/font-awesome/css/font-awesome.min.css')?>">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="<?=getenv('APP_URL')?>/plugins/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="<?=url('/plugins/Ionicons/css/ionicons.min.css')?>">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?=getenv('APP_URL')?>/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="<?=url('/css/AdminLTE.min.css')?>">
   <!-- iCheck -->
-  <link rel="stylesheet" href="<?=getenv('APP_URL')?>/plugins/iCheck/square/blue.css">
+  <link rel="stylesheet" href="<?=url('/plugins/iCheck/square/blue.css')?>">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,11 +32,11 @@
 <?=$this->section('content')?>
 
 <!-- jQuery 3 -->
-<script src="<?=getenv('APP_URL')?>/plugins/jquery/jquery.min.js"></script>
+<script src="<?=url('/plugins/jquery/jquery.min.js')?>"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="<?=getenv('APP_URL')?>/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?=url('/plugins/bootstrap/js/bootstrap.min.js')?>"></script>
 <!-- iCheck -->
-<script src="<?=getenv('APP_URL')?>/plugins/iCheck/icheck.min.js"></script>
+<script src="<?=url('/plugins/iCheck/icheck.min.js')?>"></script>
 <script>
   $(function () {
     $('input').iCheck({
