@@ -7,13 +7,12 @@ use Symfony\Component\HttpFoundation\Request;
 use League\Plates\Engine;
 
 /**
- * Handles all requests error /.
+ * Handles all requests error
  *
  */
-class ErrorController
+class ErrorController extends Controller
 {
     private $view;
-
     private $request;
 
     /**

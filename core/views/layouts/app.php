@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="<?=url('/plugins/font-awesome/css/font-awesome.min.css')?>">
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?=url('/plugins/Ionicons/css/ionicons.min.css')?>">
+  <?=$this->section('CSS')?>
   <!-- Theme style -->
   <link rel="stylesheet" href="<?=url('/css/AdminLTE.min.css')?>">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -58,6 +59,11 @@
 <script src="<?=url('/plugins/jquery/jquery.min.js')?>"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?=url('/plugins/bootstrap/js/bootstrap.min.js')?>"></script>
+
+<?=$this->section('JS')?>
+
+<!-- SweetAlert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- SlimScroll -->
 <script src="<?=url('/plugins/jquery-slimscroll/jquery.slimscroll.min.js')?>"></script>
 <!-- FastClick -->
